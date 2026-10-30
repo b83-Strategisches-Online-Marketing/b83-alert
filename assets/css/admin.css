@@ -1,0 +1,253 @@
+/* b83 Alert – Backend */
+
+/* ---------------------------------------------------------------------
+ * Eingabeformular (Dashboard-Widget und Seite „Alert“)
+ * ------------------------------------------------------------------- */
+
+.b83-alert-page .b83-alert-form {
+	max-width: 900px;
+}
+
+.b83-alert-page__intro {
+	max-width: 900px;
+	font-size: 14px;
+}
+
+.b83-alert-form__head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px 12px;
+	margin: 18px 0 8px;
+	padding-top: 14px;
+	border-top: 1px solid #dcdcde;
+}
+
+.b83-alert-form > .b83-alert-form__head:first-of-type {
+	margin-top: 4px;
+	padding-top: 0;
+	border-top: 0;
+}
+
+.b83-alert-form__head h3 {
+	margin: 0;
+	font-size: 15px;
+}
+
+.b83-alert-form__head .b83-alert-switch {
+	margin-left: auto;
+}
+
+.b83-alert-form__label {
+	display: block;
+	margin-bottom: 4px;
+	font-weight: 600;
+}
+
+.b83-alert-form__row {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0 20px;
+}
+
+.b83-alert-form__row p {
+	margin: 10px 0 0;
+}
+
+.b83-alert-form .wp-editor-wrap {
+	margin-top: 4px;
+}
+
+.b83-alert-form__actions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+	margin: 18px 0 4px;
+	padding-top: 14px;
+	border-top: 1px solid #dcdcde;
+}
+
+.b83-alert-form.is-compact .b83-alert-form__row {
+	gap: 0 12px;
+}
+
+.b83-alert-form.is-compact input[type="datetime-local"] {
+	max-width: 100%;
+}
+
+.b83-alert-count {
+	display: block;
+	margin-top: 2px;
+	color: #646970;
+	font-size: 12px;
+	text-align: right;
+}
+
+/* Schalter „aktiv“ */
+.b83-alert-switch {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	cursor: pointer;
+	user-select: none;
+}
+
+.b83-alert-switch input {
+	position: absolute;
+	opacity: 0;
+	width: 1px;
+	height: 1px;
+}
+
+.b83-alert-switch__ui {
+	position: relative;
+	width: 40px;
+	height: 22px;
+	border-radius: 11px;
+	background: #8c8f94;
+	transition: background-color .15s ease;
+}
+
+.b83-alert-switch__ui::after {
+	content: "";
+	position: absolute;
+	top: 3px;
+	left: 3px;
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	background: #fff;
+	transition: transform .15s ease;
+}
+
+.b83-alert-switch input:checked + .b83-alert-switch__ui {
+	background: #00a32a;
+}
+
+.b83-alert-switch input:checked + .b83-alert-switch__ui::after {
+	transform: translateX(18px);
+}
+
+.b83-alert-switch input:focus-visible + .b83-alert-switch__ui {
+	box-shadow: 0 0 0 2px #fff, 0 0 0 4px #2271b1;
+}
+
+.b83-alert-switch__text {
+	font-weight: 600;
+}
+
+/* Statusanzeige */
+.b83-alert-badge {
+	display: inline-block;
+	padding: 2px 9px;
+	border-radius: 999px;
+	background: #f0f0f1;
+	color: #50575e;
+	font-size: 12px;
+	line-height: 18px;
+}
+
+.b83-alert-badge.is-live {
+	background: #e7f7ee;
+	color: #116329;
+}
+
+.b83-alert-badge.is-scheduled {
+	background: #fcf3e3;
+	color: #8a5300;
+}
+
+.b83-alert-badge.is-expired {
+	background: #fcebec;
+	color: #8a2424;
+}
+
+/* ---------------------------------------------------------------------
+ * Einstellungsseite
+ * ------------------------------------------------------------------- */
+
+.b83-alert-status {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+	margin: 16px 0 8px;
+}
+
+.b83-alert-status__card {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 4px;
+	min-width: 180px;
+	padding: 12px 16px;
+	border: 1px solid #dcdcde;
+	border-radius: 4px;
+	background: #fff;
+}
+
+.b83-alert-status__card .b83-alert-badge {
+	align-self: flex-start;
+}
+
+.b83-alert-settings__layout {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: 24px;
+}
+
+@media (min-width: 1280px) {
+	.b83-alert-settings__layout {
+		grid-template-columns: minmax(0, 1fr) 460px;
+		align-items: start;
+	}
+
+	.b83-alert-settings__preview {
+		position: sticky;
+		top: 46px;
+	}
+}
+
+.b83-alert-settings__preview {
+	min-width: 0;
+}
+
+.b83-alert-preview {
+	overflow: hidden;
+	border: 1px solid #c3c4c7;
+	border-radius: 6px;
+	background: repeating-linear-gradient(45deg, #f6f7f7, #f6f7f7 12px, #eef0f1 12px, #eef0f1 24px);
+}
+
+.b83-alert-preview__stage .b83-alert-popup.is-preview .b83-alert-popup__dialog {
+	font-size: 15px;
+}
+
+.b83-alert-range input[type="range"] {
+	width: min(320px, 70%);
+	vertical-align: middle;
+}
+
+.b83-alert-range output {
+	display: inline-block;
+	min-width: 2.5em;
+	font-weight: 600;
+	text-align: right;
+}
+
+.b83-alert-pages {
+	max-height: 260px;
+	max-width: 520px;
+	overflow: auto;
+	margin-top: 8px;
+	padding: 8px 12px;
+	border: 1px solid #c3c4c7;
+	border-radius: 4px;
+	background: #fff;
+}
+
+.b83-alert-pages label {
+	display: block;
+	padding: 3px 0;
+}
