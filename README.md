@@ -1,3 +1,5 @@
+![](assets/img/banner-772x250.png)
+
 # b83 Alert
 
 Wichtige Mitteilungen schnell auf die Website bringen – als **Pop-up** mit Formatierung (Überschriften, Fett, Listen, Links) und/oder als **Laufschrift** (Ticker). Angezeigt wird nur, was befüllt und aktiv ist, auf Wunsch zeitgesteuert.

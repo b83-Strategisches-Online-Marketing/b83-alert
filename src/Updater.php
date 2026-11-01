@@ -67,6 +67,8 @@ final class Updater {
 			'package'      => $release['package'],
 			'requires_php' => '8.1',
 			'requires'     => '6.2',
+			'icons'        => $this->icons(),
+			'banners'      => $this->banners(),
 		);
 	}
 
@@ -97,8 +99,11 @@ final class Updater {
 			'requires_php'  => '8.1',
 			'last_updated'  => $release['published'],
 			'download_link' => $release['package'],
+			'icons'         => $this->icons(),
+			'banners'       => $this->banners(),
 			'sections'      => array(
-				'changelog' => $release['notes'],
+				'description' => $this->description(),
+				'changelog'   => $release['notes'],
 			),
 		);
 	}
@@ -148,6 +153,48 @@ final class Updater {
 		);
 		set_transient( self::TRANSIENT, $release, 6 * HOUR_IN_SECONDS );
 		return $release;
+	}
+
+	/**
+	 * Icons für die Update-Liste und „Details ansehen“.
+	 *
+	 * @return array<string,string>
+	 */
+	private function icons(): array {
+		$url = plugin_dir_url( B83_ALERT_FILE ) . 'assets/img/';
+		return array(
+			'1x'  => $url . 'icon-128x128.png',
+			'2x'  => $url . 'icon-256x256.png',
+			'svg' => $url . 'icon.svg',
+		);
+	}
+
+	/**
+	 * Banner für „Details ansehen“.
+	 *
+	 * @return array<string,string>
+	 */
+	private function banners(): array {
+		$url = plugin_dir_url( B83_ALERT_FILE ) . 'assets/img/';
+		return array(
+			'low'  => $url . 'banner-772x250.png',
+			'high' => $url . 'banner-1544x500.png',
+		);
+	}
+
+	/** Beschreibung für „Details ansehen“. */
+	private function description(): string {
+		$html = '';
+		$html .= '<p>' . esc_html__( 'Für Mitteilungen, die schnell auf die Website müssen, etwa eine Warnung vor starkem Schneefall. Sie tragen den Text im Dashboard ein, schalten ihn aktiv und legen auf Wunsch fest, von wann bis wann er erscheint.', 'b83-alert' ) . '</p>';
+		$html .= '<p>' . esc_html__( 'Angezeigt wird ein Pop-up mit Überschriften, Listen und Links, eine Laufschrift oder beides. Ohne Text oder außerhalb des Zeitraums erscheint nichts.', 'b83-alert' ) . '</p>';
+		$html .= '<ul>';
+		$html .= '<li>' . esc_html__( 'Pop-up auf der Startseite, allen Seiten, ausgewählten Seiten oder per Shortcode', 'b83-alert' ) . '</li>';
+		$html .= '<li>' . esc_html__( 'Art: Information, Warnung oder Alarm', 'b83-alert' ) . '</li>';
+		$html .= '<li>' . esc_html__( 'Redakteure pflegen den Text, Administratoren das Design', 'b83-alert' ) . '</li>';
+		$html .= '<li>' . esc_html__( 'Am Smartphone als Fenster von unten, mit der Tastatur bedienbar', 'b83-alert' ) . '</li>';
+		$html .= '</ul>';
+		$html .= '<p>' . esc_html__( 'Ein Plugin von b83 – Strategisches Online Marketing.', 'b83-alert' ) . ' <a href="https://b83.at">b83.at</a></p>';
+		return $html;
 	}
 
 	/* ---------------------------------------------------------------------
