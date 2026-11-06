@@ -29,6 +29,7 @@ final class Settings {
 	public const POPUP_FREQUENCY = array( 'session', 'once', 'always' );
 	public const SHADOWS         = array( 'none', 'soft', 'strong' );
 	public const TICKER_WHERE    = array( 'shortcode', 'top', 'bottom' );
+	public const DASHBOARD       = array( 'wide', 'widget' );
 
 	/** Felder, die der Kunde bearbeitet. */
 	public const CONTENT_KEYS = array(
@@ -105,6 +106,7 @@ final class Settings {
 			'color_alarm'         => '#c62828',
 
 			// Weiteres.
+			'dashboard_layout'    => 'wide',
 			'purge_cache'         => true,
 			'delete_on_uninstall' => false,
 		);
@@ -208,6 +210,7 @@ final class Settings {
 		$clean['popup_frequency'] = self::pick( $input['popup_frequency'] ?? null, self::POPUP_FREQUENCY, $d['popup_frequency'] );
 		$clean['popup_shadow']    = self::pick( $input['popup_shadow'] ?? null, self::SHADOWS, $d['popup_shadow'] );
 		$clean['ticker_where']    = self::pick( $input['ticker_where'] ?? null, self::TICKER_WHERE, $d['ticker_where'] );
+		$clean['dashboard_layout'] = self::pick( $input['dashboard_layout'] ?? null, self::DASHBOARD, $d['dashboard_layout'] );
 
 		// Seiten-IDs für „ausgewählte Seiten“.
 		$pages                = isset( $input['popup_pages'] ) && is_array( $input['popup_pages'] ) ? $input['popup_pages'] : array();

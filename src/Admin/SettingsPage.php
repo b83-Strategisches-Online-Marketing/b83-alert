@@ -1,7 +1,10 @@
 <?php
 /**
- * Seite „b83 → Alert-Einstellungen“: Anzeigeort, Design und Tempo
- * (nur Administratoren).
+ * Reiter „Einstellungen“ auf der Seite „b83 → Alert“: Anzeigeort, Design
+ * und Tempo (nur Administratoren).
+ *
+ * Bis Version 1.2 war das ein eigener Menüpunkt (page=b83-alert-settings);
+ * alte Links werden auf den Reiter weitergeleitet.
  *
  * @package B83\Alert
  */
@@ -20,17 +23,16 @@ defined( 'ABSPATH' ) || exit;
 
 final class SettingsPage {
 
-	public const SLUG = 'b83-alert-settings';
+	/** Früherer Seiten-Slug, nur noch für die Weiterleitung. */
+	public const LEGACY_SLUG = 'b83-alert-settings';
 
 	private const ACTION = 'b83_alert_save_settings';
 
 	/** Erlaubte Hinweise (fester Schlüssel in der URL). */
 	private const NOTICES = array( 'saved' );
 
-	private string $hook = '';
-
 	public function register(): void {
-		add_action( 'admin_menu', array( $this, 'add_menu' ) );
+		add_action( 'admin_init', array( $this, 'redirect_legacy' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue' ) );
 		add_action( 'admin_post_' . self::ACTION, array( $this, 'handle_save' ) );
 		add_filter( 'plugin_action_links_' . plugin_basename( B83_ALERT_FILE ), array( $this, 'action_links' ) );
@@ -39,22 +41,20 @@ final class SettingsPage {
 	}
 
 	public static function url(): string {
-		return admin_url( 'admin.php?page=' . self::SLUG );
+		return add_query_arg( 'tab', ContentPage::TAB_SETTINGS, ContentPage::url() );
 	}
 
-	public function add_menu(): void {
-		$this->hook = (string) add_submenu_page(
-			B83Menu::SLUG,
-			__( 'Alert-Einstellungen', 'b83-alert' ),
-			__( 'Alert-Einstellungen', 'b83-alert' ),
-			Capabilities::config(),
-			self::SLUG,
-			array( $this, 'render' )
-		);
+	/** Alte Adresse admin.php?page=b83-alert-settings auf den Reiter umleiten. */
+	public function redirect_legacy(): void {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- nur Weiterleitung.
+		if ( isset( $_GET['page'] ) && self::LEGACY_SLUG === $_GET['page'] ) {
+			wp_safe_redirect( self::url() );
+			exit;
+		}
 	}
 
 	public function enqueue( string $hook ): void {
-		if ( $hook !== $this->hook ) {
+		if ( ! ContentPage::is_page( $hook ) || ContentPage::TAB_SETTINGS !== ContentPage::current_tab() || ! Capabilities::can_config() ) {
 			return;
 		}
 		wp_enqueue_style( 'wp-color-picker' );
@@ -176,14 +176,14 @@ final class SettingsPage {
 	 * Ausgabe
 	 * ------------------------------------------------------------------- */
 
-	public function render(): void {
+	/** Inhalt des Reiters (Rahmen, Überschrift und Reiter liefert ContentPage). */
+	public function render_tab(): void {
 		if ( ! Capabilities::can_config() ) {
 			wp_die( esc_html__( 'Keine Berechtigung.', 'b83-alert' ), '', array( 'response' => 403 ) );
 		}
 		$s = Settings::get();
 
-		echo '<div class="wrap b83-alert-settings">';
-		echo '<h1>' . esc_html__( 'Alert-Einstellungen', 'b83-alert' ) . '</h1>';
+		echo '<div class="b83-alert-settings">';
 		$this->notice();
 
 		echo '<div class="b83-alert-status">';
@@ -197,7 +197,6 @@ final class SettingsPage {
 		}
 		$cache = CachePurge::detected_plugin();
 		echo '<div class="b83-alert-status__card"><span>' . esc_html__( 'Cache-Plugin', 'b83-alert' ) . '</span><strong>' . esc_html( '' !== $cache ? $cache : __( 'keines erkannt', 'b83-alert' ) ) . '</strong></div>';
-		echo '<div class="b83-alert-status__card"><a class="button" href="' . esc_url( ContentPage::url() ) . '">' . esc_html__( 'Mitteilung bearbeiten', 'b83-alert' ) . '</a></div>';
 		echo '</div>';
 
 		echo '<div class="b83-alert-settings__layout"><div class="b83-alert-settings__main">';
@@ -308,6 +307,15 @@ final class SettingsPage {
 		/* Weiteres */
 		echo '<h2>' . esc_html__( 'Weiteres', 'b83-alert' ) . '</h2>';
 		echo '<table class="form-table" role="presentation"><tbody>';
+		$this->radio_row(
+			'dashboard_layout',
+			__( 'Mitteilung im Dashboard', 'b83-alert' ),
+			array(
+				'wide'   => __( 'Über die volle Breite oben (Pop-up links, Laufschrift rechts)', 'b83-alert' ),
+				'widget' => __( 'Als normales Dashboard-Widget (verschiebbar)', 'b83-alert' ),
+			),
+			(string) $s['dashboard_layout']
+		);
 		$this->checkbox_row( 'purge_cache', __( 'Cache leeren', 'b83-alert' ), __( 'Nach dem Speichern sowie zu Beginn und Ende einer Mitteilung den Seiten-Cache leeren (WP Rocket, LiteSpeed, W3 Total Cache, WP Super Cache, SiteGround).', 'b83-alert' ), (bool) $s['purge_cache'] );
 		$this->checkbox_row( 'delete_on_uninstall', __( 'Beim Löschen', 'b83-alert' ), __( 'Beim Löschen des Plugins alle Mitteilungen und Einstellungen entfernen.', 'b83-alert' ), (bool) $s['delete_on_uninstall'] );
 		echo '</tbody></table>';

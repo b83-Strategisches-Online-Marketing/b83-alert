@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.3.0 – 2026-11-06
+
+### Neu
+- Mitteilung im Dashboard über die volle Breite oberhalb der Widgets: Pop-up links, Laufschrift rechts, einklappbar (wird gemerkt)
+- Einstellung „Mitteilung im Dashboard“: volle Breite (Standard) oder normales Widget wie bisher
+- Seite „Alert“ ebenfalls zweispaltig
+
+### Geändert
+- Nur noch ein Menüpunkt „Alert“ im b83-Menü, mit den Reitern „Mitteilung“ und „Einstellungen“ (Einstellungen nur für Administratoren). Alte Links auf „Alert-Einstellungen“ werden weitergeleitet.
+- Verständlicherer Hinweis zu Überschriften im Pop-up-Text
+
 ## 1.2.1 – 2026-11-01
 
 ### Behoben

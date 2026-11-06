@@ -50,9 +50,10 @@ final class Plugin {
 		if ( is_admin() ) {
 			$form = new ContentForm();
 			$form->register();
-			// Reihenfolge im b83-Menü: zuerst „Alert“, dann „Alert-Einstellungen“.
-			( new ContentPage( $form ) )->register();
-			( new SettingsPage() )->register();
+			// Ein Menüpunkt „Alert“ mit den Reitern Mitteilung und Einstellungen.
+			$settings = new SettingsPage();
+			$settings->register();
+			( new ContentPage( $form, $settings ) )->register();
 			( new DashboardWidget( $form ) )->register();
 		}
 

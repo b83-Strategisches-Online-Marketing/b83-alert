@@ -81,17 +81,21 @@ final class ContentForm {
 
 	/**
 	 * @param string $target  page oder dashboard.
-	 * @param bool   $compact Kompakte Darstellung (Dashboard).
+	 * @param bool   $compact Kompakte Darstellung (schmales Dashboard-Widget).
+	 * @param bool   $wide    Zwei Spalten: links Pop-up, rechts Laufschrift.
 	 */
-	public function render( string $target, bool $compact ): void {
+	public function render( string $target, bool $compact, bool $wide = false ): void {
 		$settings = Settings::get();
 
-		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" class="b83-alert-form' . ( $compact ? ' is-compact' : '' ) . '">';
+		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" class="b83-alert-form' . ( $compact ? ' is-compact' : '' ) . ( $wide ? ' is-wide' : '' ) . '">';
 		echo '<input type="hidden" name="action" value="' . esc_attr( self::ACTION ) . '">';
 		echo '<input type="hidden" name="b83_alert[target]" value="' . esc_attr( in_array( $target, self::TARGETS, true ) ? $target : 'page' ) . '">';
 		wp_nonce_field( self::ACTION );
 
+		echo '<div class="b83-alert-form__cols">';
+
 		// Pop-up.
+		echo '<div class="b83-alert-form__section is-popup">';
 		$this->section_head( 'popup', __( 'Pop-up-Mitteilung', 'b83-alert' ), $settings );
 		echo '<div class="b83-alert-form__body">';
 		$editor_id = 'dashboard' === $target ? 'b83alertwidgeteditor' : 'b83alertpageeditor';
@@ -100,7 +104,7 @@ final class ContentForm {
 			$editor_id,
 			array(
 				'textarea_name' => 'b83_alert[popup_content]',
-				'textarea_rows' => $compact ? 7 : 12,
+				'textarea_rows' => $compact ? 7 : ( $wide ? 9 : 12 ),
 				'media_buttons' => ! $compact,
 				'teeny'         => false,
 				'quicktags'     => true,
@@ -111,11 +115,12 @@ final class ContentForm {
 				),
 			)
 		);
-		echo '<p class="description">' . esc_html__( 'Überschriften über „Absatz“ links in der Werkzeugleiste. Leer lassen = kein Pop-up.', 'b83-alert' ) . '</p>';
+		echo '<p class="description">' . esc_html__( 'Für eine Überschrift links in der Werkzeugleiste das Auswahlfeld „Absatz“ öffnen und „Überschrift groß“, „mittel“ oder „klein“ wählen. Ist das Feld leer, erscheint kein Pop-up.', 'b83-alert' ) . '</p>';
 		$this->level_and_time( 'popup', $settings );
-		echo '</div>';
+		echo '</div></div>';
 
 		// Laufschrift.
+		echo '<div class="b83-alert-form__section is-ticker">';
 		$this->section_head( 'ticker', __( 'Laufschrift (Ticker)', 'b83-alert' ), $settings );
 		echo '<div class="b83-alert-form__body">';
 		printf(
@@ -133,6 +138,8 @@ final class ContentForm {
 			esc_attr( (string) $settings['ticker_link'] )
 		);
 		$this->level_and_time( 'ticker', $settings );
+		echo '</div></div>';
+
 		echo '</div>';
 
 		echo '<p class="b83-alert-form__actions">';
@@ -191,8 +198,9 @@ final class ContentForm {
 	 * Statusanzeige einer Mitteilung.
 	 *
 	 * @param array<string,mixed> $settings Einstellungen.
+	 * @param string              $prefix   Optionale Bezeichnung vor dem Status.
 	 */
-	public static function badge( string $type, array $settings ): void {
+	public static function badge( string $type, array $settings, string $prefix = '' ): void {
 		$state  = Schedule::state( $type, $settings );
 		$format = get_option( 'date_format' ) . ', ' . get_option( 'time_format' );
 		$label  = match ( $state ) {
@@ -206,7 +214,7 @@ final class ContentForm {
 			Schedule::INACTIVE  => __( 'ausgeschaltet', 'b83-alert' ),
 			default             => __( 'leer', 'b83-alert' ),
 		};
-		printf( '<span class="b83-alert-badge is-%1$s">%2$s</span>', esc_attr( $state ), esc_html( (string) $label ) );
+		printf( '<span class="b83-alert-badge is-%1$s">%2$s</span>', esc_attr( $state ), esc_html( ( '' !== $prefix ? $prefix . ': ' : '' ) . $label ) );
 	}
 
 	/** Gespeichert-Hinweis (fester Schlüssel aus der URL). */

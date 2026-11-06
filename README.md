@@ -12,10 +12,10 @@ Entwickelt von [b83 – Strategisches Online Marketing](https://b83.at).
 
 | Wer | Wo | Was |
 |---|---|---|
-| Kunde (ab Redakteur) | **Dashboard-Widget „Mitteilung“** und **b83 → Alert** | Pop-up-Text, Laufschrift, Art (Information / Warnung / Alarm), aktiv, anzeigen ab / bis, Vorschau |
-| Administrator | **b83 → Alert-Einstellungen** | Wo das Pop-up erscheint, Häufigkeit, Verzögerung, Design, Laufschrift-Position und -Tempo, Farben, Cache |
+| Kunde (ab Redakteur) | **Dashboard** (Panel über die volle Breite oder Widget) und **b83 → Alert**, Reiter „Mitteilung“ | Pop-up-Text, Laufschrift, Art (Information / Warnung / Alarm), aktiv, anzeigen ab / bis, Vorschau |
+| Administrator | **b83 → Alert**, Reiter „Einstellungen“ | Wo das Pop-up erscheint, Häufigkeit, Verzögerung, Design, Laufschrift-Position und -Tempo, Farben, Cache |
 
-Redakteure sehen im b83-Menü nur „Alert“, nicht die Einstellungen.
+Redakteure sehen nur den Reiter „Mitteilung“. Unter Einstellungen → „Mitteilung im Dashboard“ wählst du, ob die Eingabe im Dashboard über die volle Breite oben (Pop-up links, Laufschrift rechts) oder als normales Widget erscheint.
 
 ## Pop-up
 
