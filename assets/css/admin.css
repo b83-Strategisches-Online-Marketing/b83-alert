@@ -414,6 +414,18 @@
 	cursor: default;
 }
 
+/* WordPress formatiert Widget-Überschriften nur innerhalb von .metabox-holder –
+   außerhalb der Spalten die gleichen Werte setzen. */
+.b83-alert-row__side .postbox > h2,
+.b83-alert-row__side .postbox > h3,
+.b83-alert-row__side .postbox h2.hndle,
+.b83-alert-row__side .postbox h3.hndle {
+	margin: 0;
+	padding: 8px 12px;
+	font-size: 14px;
+	line-height: 1.4;
+}
+
 /* Spalten innerhalb der Mitteilung richten sich nach ihrer eigenen Breite */
 .b83-alert-wide {
 	container-type: inline-size;

@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.4.1 – 2026-11-06
+
+### Behoben
+- Dashboard: Die Überschrift des Widgets neben der Mitteilung (z. B. „Kundeninformation“) hatte keinen Innenabstand und war zu groß
+
 ## 1.4.0 – 2026-11-06
 
 ### Neu
