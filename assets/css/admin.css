@@ -260,20 +260,21 @@
 	max-width: 1400px;
 }
 
+/* Seite „Alert“: nach Fensterbreite; Dashboard: nach Breite des Panels (siehe unten) */
 @media (min-width: 1100px) {
-	.b83-alert-form.is-wide .b83-alert-form__cols {
+	.b83-alert-page .b83-alert-form.is-wide .b83-alert-form__cols {
 		display: grid;
 		grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
 		gap: 0 32px;
 		align-items: start;
 	}
 
-	.b83-alert-form.is-wide .b83-alert-form__section.is-ticker {
+	.b83-alert-page .b83-alert-form.is-wide .b83-alert-form__section.is-ticker {
 		padding-left: 32px;
 		border-left: 1px solid #dcdcde;
 	}
 
-	.b83-alert-form.is-wide .b83-alert-form__section > .b83-alert-form__head {
+	.b83-alert-page .b83-alert-form.is-wide .b83-alert-form__section > .b83-alert-form__head {
 		margin-top: 4px;
 		padding-top: 0;
 		border-top: 0;
@@ -359,4 +360,81 @@
 
 .b83-alert-wide__inside .b83-alert-form__actions {
 	margin-bottom: 12px;
+}
+
+/* ---------------------------------------------------------------------
+ * Dashboard-Zeile: links ein Widget (z. B. Kundeninformation),
+ * rechts die Mitteilung
+ * ------------------------------------------------------------------- */
+
+.b83-alert-row {
+	margin: 16px 0 20px;
+}
+
+.b83-alert-row .b83-alert-wide.postbox {
+	margin: 0;
+}
+
+.b83-alert-row:not(.has-side) > .b83-alert-row__side {
+	display: none;
+}
+
+.b83-alert-row.has-side {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: 20px;
+	align-items: start;
+}
+
+/* Wie die Dashboard-Spalten von WordPress: 2 Spalten → 1 : 2, 4 Spalten → 1 : 3 */
+@media (min-width: 1100px) {
+	.b83-alert-row.has-side {
+		grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+	}
+}
+
+@media (min-width: 1800px) {
+	.b83-alert-row.has-side {
+		grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
+	}
+}
+
+.b83-alert-row__side .postbox {
+	margin: 0;
+	min-width: 0;
+}
+
+/* Verschieben-Pfeile ergeben außerhalb der Spalten keinen Sinn */
+.b83-alert-row__side .postbox .handle-order-higher,
+.b83-alert-row__side .postbox .handle-order-lower {
+	display: none;
+}
+
+.b83-alert-row__side .postbox .hndle {
+	cursor: default;
+}
+
+/* Spalten innerhalb der Mitteilung richten sich nach ihrer eigenen Breite */
+.b83-alert-wide {
+	container-type: inline-size;
+}
+
+@container (min-width: 820px) {
+	.b83-alert-wide .b83-alert-form.is-wide .b83-alert-form__cols {
+		display: grid;
+		grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+		gap: 0 28px;
+		align-items: start;
+	}
+
+	.b83-alert-wide .b83-alert-form.is-wide .b83-alert-form__section.is-ticker {
+		padding-left: 28px;
+		border-left: 1px solid #dcdcde;
+	}
+
+	.b83-alert-wide .b83-alert-form.is-wide .b83-alert-form__section > .b83-alert-form__head {
+		margin-top: 4px;
+		padding-top: 0;
+		border-top: 0;
+	}
 }

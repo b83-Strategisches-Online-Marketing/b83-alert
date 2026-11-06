@@ -15,7 +15,7 @@ Entwickelt von [b83 – Strategisches Online Marketing](https://b83.at).
 | Kunde (ab Redakteur) | **Dashboard** (Panel über die volle Breite oder Widget) und **b83 → Alert**, Reiter „Mitteilung“ | Pop-up-Text, Laufschrift, Art (Information / Warnung / Alarm), aktiv, anzeigen ab / bis, Vorschau |
 | Administrator | **b83 → Alert**, Reiter „Einstellungen“ | Wo das Pop-up erscheint, Häufigkeit, Verzögerung, Design, Laufschrift-Position und -Tempo, Farben, Cache |
 
-Redakteure sehen nur den Reiter „Mitteilung“. Unter Einstellungen → „Mitteilung im Dashboard“ wählst du, ob die Eingabe im Dashboard über die volle Breite oben (Pop-up links, Laufschrift rechts) oder als normales Widget erscheint.
+Redakteure sehen nur den Reiter „Mitteilung“. Unter Einstellungen → „Mitteilung im Dashboard“ wählst du, ob die Eingabe im Dashboard über die volle Breite oben (Pop-up links, Laufschrift rechts) oder als normales Widget erscheint. Unter „Neben der Mitteilung“ wählst du ein Dashboard-Widget, das links daneben steht – Standard ist die Kundeninformation aus b83 White Label. Fehlt es, nimmt die Mitteilung die ganze Breite ein.
 
 ## Pop-up
 
@@ -60,7 +60,8 @@ Funktioniert in Elementor über das Shortcode-Widget.
 |---|---|
 | `b83_alert_edit_capability` | Berechtigung zum Bearbeiten der Mitteilungen (Standard `edit_pages`) |
 | `b83_alert_config_capability` | Berechtigung für die Einstellungen (Standard `manage_options`) |
-| `b83_alert_dashboard_widget` | Dashboard-Widget anzeigen (bool) |
+| `b83_alert_dashboard_widget` | Mitteilung im Dashboard anzeigen (bool) |
+| `b83_alert_dashboard_side` | Kennung des Widgets links neben der Mitteilung (Standard: Einstellung, sonst `b83_wl_notice`; `''` = keines) |
 | `b83_alert_show_popup` | Pop-up auf der aktuellen Seite zeigen (bool, Einstellungen) |
 | `b83_alert_show_ticker_bar` | Laufschrift-Leiste auf der aktuellen Seite zeigen (bool, Einstellungen) |
 | `b83_alert_page_post_types` | Inhaltstypen in der Seitenauswahl (Standard `page`) |

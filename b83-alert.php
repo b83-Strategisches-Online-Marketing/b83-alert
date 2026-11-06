@@ -3,7 +3,7 @@
  * Plugin Name:       b83 Alert
  * Plugin URI:        https://b83.at
  * Description:       Wichtige Mitteilungen schnell veröffentlichen: als responsives Pop-up (mit Formatierung und Überschriften) und/oder als Laufschrift (Ticker). Zeitgesteuert, nur sichtbar, wenn befüllt und aktiv. Startseite, ganze Website oder per Shortcode.
- * Version:           1.3.0
+ * Version:           1.4.0
  * Requires at least: 6.2
  * Requires PHP:      8.1
  * Author:            b83 – Wolfgang Grabs-Schrempf
@@ -21,7 +21,7 @@ declare(strict_types=1);
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'B83_ALERT_VERSION', '1.3.0' );
+define( 'B83_ALERT_VERSION', '1.4.0' );
 define( 'B83_ALERT_FILE', __FILE__ );
 define( 'B83_ALERT_DIR', plugin_dir_path( __FILE__ ) );
 define( 'B83_ALERT_URL', plugin_dir_url( __FILE__ ) );

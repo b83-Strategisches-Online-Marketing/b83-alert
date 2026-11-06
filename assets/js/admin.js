@@ -12,18 +12,46 @@
 	var STATE_KEY = 'b83_alert_wide_open';
 
 	/*
-	 * Breites Dashboard-Panel direkt unter die Überschrift „Dashboard“
-	 * setzen. Läuft sofort (nicht erst bei „ready“), also bevor der Editor
-	 * startet – sonst ginge der Inhalt des Editors beim Verschieben verloren.
+	 * Dashboard-Zeile direkt unter die Überschrift „Dashboard“ setzen und das
+	 * gewählte Widget (Standard: Kundeninformation aus b83 White Label) in die
+	 * linke Spalte holen. Läuft sofort (nicht erst bei „ready“), also bevor
+	 * der Editor startet – sonst ginge der Inhalt des Editors beim
+	 * Verschieben verloren.
 	 */
 	( function () {
+		var row = document.getElementById( 'b83-alert-row' );
 		var panel = document.getElementById( 'b83-alert-wide' );
-		if ( ! panel ) {
+		if ( ! row || ! panel ) {
 			return;
 		}
 		var anchor = document.querySelector( '#wpbody-content .wrap > h1' );
 		if ( anchor && anchor.parentNode ) {
-			anchor.parentNode.insertBefore( panel, anchor.nextSibling );
+			anchor.parentNode.insertBefore( row, anchor.nextSibling );
+		}
+
+		var slot = row.querySelector( '.b83-alert-row__side' );
+		var sideId = row.getAttribute( 'data-side' ) || '';
+		var side = sideId ? document.getElementById( sideId ) : null;
+
+		function isVisible( el ) {
+			return el && ! el.classList.contains( 'hide-if-js' ) && 'none' !== el.style.display;
+		}
+
+		function layout() {
+			row.classList.toggle( 'has-side', isVisible( side ) && side.parentNode === slot );
+		}
+
+		if ( side && slot && side.classList.contains( 'postbox' ) ) {
+			slot.appendChild( side );
+			side.classList.add( 'b83-alert-row__widget' );
+			layout();
+			// „Ansicht anpassen“: Widget ein- oder ausblenden.
+			var toggle = document.getElementById( sideId + '-hide' );
+			if ( toggle ) {
+				toggle.addEventListener( 'change', function () {
+					window.setTimeout( layout, 0 );
+				} );
+			}
 		}
 		var details = panel.querySelector( 'details' );
 		if ( ! details ) {

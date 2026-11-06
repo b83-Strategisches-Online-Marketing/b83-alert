@@ -107,6 +107,7 @@ final class Settings {
 
 			// Weiteres.
 			'dashboard_layout'    => 'wide',
+			'dashboard_side'      => 'b83_wl_notice',
 			'purge_cache'         => true,
 			'delete_on_uninstall' => false,
 		);
@@ -211,6 +212,10 @@ final class Settings {
 		$clean['popup_shadow']    = self::pick( $input['popup_shadow'] ?? null, self::SHADOWS, $d['popup_shadow'] );
 		$clean['ticker_where']    = self::pick( $input['ticker_where'] ?? null, self::TICKER_WHERE, $d['ticker_where'] );
 		$clean['dashboard_layout'] = self::pick( $input['dashboard_layout'] ?? null, self::DASHBOARD, $d['dashboard_layout'] );
+
+		// Widget neben der Mitteilung: Widget-ID oder leer für keines.
+		$side                    = is_string( $input['dashboard_side'] ?? null ) ? $input['dashboard_side'] : (string) $d['dashboard_side'];
+		$clean['dashboard_side'] = substr( (string) preg_replace( '/[^A-Za-z0-9_\-]/', '', $side ), 0, 100 );
 
 		// Seiten-IDs für „ausgewählte Seiten“.
 		$pages                = isset( $input['popup_pages'] ) && is_array( $input['popup_pages'] ) ? $input['popup_pages'] : array();

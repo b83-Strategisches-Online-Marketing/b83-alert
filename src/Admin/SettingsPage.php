@@ -96,6 +96,12 @@ final class SettingsPage {
 				$values[ $key ] = ! empty( $raw[ $key ] );
 				continue;
 			}
+			if ( 'dashboard_side' === $key ) {
+				// Nur bekannte Widgets oder „keines“.
+				$side           = isset( $raw[ $key ] ) && is_string( $raw[ $key ] ) ? $raw[ $key ] : '';
+				$values[ $key ] = array_key_exists( $side, DashboardWidget::side_choices() ) ? $side : '';
+				continue;
+			}
 			if ( 'popup_pages' === $key ) {
 				// Nur Seiten übernehmen, die es wirklich gibt.
 				$ids             = isset( $raw['popup_pages'] ) && is_array( $raw['popup_pages'] ) ? array_map( 'absint', $raw['popup_pages'] ) : array();
@@ -311,10 +317,17 @@ final class SettingsPage {
 			'dashboard_layout',
 			__( 'Mitteilung im Dashboard', 'b83-alert' ),
 			array(
-				'wide'   => __( 'Über die volle Breite oben (Pop-up links, Laufschrift rechts)', 'b83-alert' ),
+				'wide'   => __( 'Eigene Zeile oben über die Widgets (Pop-up und Laufschrift nebeneinander)', 'b83-alert' ),
 				'widget' => __( 'Als normales Dashboard-Widget (verschiebbar)', 'b83-alert' ),
 			),
 			(string) $s['dashboard_layout']
+		);
+		$this->select_row(
+			'dashboard_side',
+			__( 'Neben der Mitteilung', 'b83-alert' ),
+			array( '' => __( '— keines (Mitteilung über die volle Breite) —', 'b83-alert' ) ) + DashboardWidget::side_choices(),
+			(string) $s['dashboard_side'],
+			__( 'Dieses Dashboard-Widget steht links neben der Mitteilung (nur bei „volle Breite“). Ist es auf der Website nicht vorhanden oder ausgeblendet, nimmt die Mitteilung die ganze Breite ein. Die Liste füllt sich, sobald ein Administrator das Dashboard aufruft.', 'b83-alert' )
 		);
 		$this->checkbox_row( 'purge_cache', __( 'Cache leeren', 'b83-alert' ), __( 'Nach dem Speichern sowie zu Beginn und Ende einer Mitteilung den Seiten-Cache leeren (WP Rocket, LiteSpeed, W3 Total Cache, WP Super Cache, SiteGround).', 'b83-alert' ), (bool) $s['purge_cache'] );
 		$this->checkbox_row( 'delete_on_uninstall', __( 'Beim Löschen', 'b83-alert' ), __( 'Beim Löschen des Plugins alle Mitteilungen und Einstellungen entfernen.', 'b83-alert' ), (bool) $s['delete_on_uninstall'] );
@@ -373,6 +386,19 @@ final class SettingsPage {
 			echo '<p class="description">' . esc_html( $description ) . '</p>';
 		}
 		echo '</fieldset></td></tr>';
+	}
+
+	/** @param array<string,string> $options Optionen. */
+	private function select_row( string $key, string $label, array $options, string $value, string $description = '' ): void {
+		printf( '<tr><th scope="row"><label for="b83-alert-%1$s">%2$s</label></th><td><select id="b83-alert-%1$s" name="b83_alert[%3$s]">', esc_attr( str_replace( '_', '-', $key ) ), esc_html( $label ), esc_attr( $key ) );
+		foreach ( $options as $option => $text ) {
+			printf( '<option value="%1$s"%2$s>%3$s</option>', esc_attr( (string) $option ), selected( $value, (string) $option, false ), esc_html( $text ) );
+		}
+		echo '</select>';
+		if ( '' !== $description ) {
+			echo '<p class="description">' . esc_html( $description ) . '</p>';
+		}
+		echo '</td></tr>';
 	}
 
 	private function color_row( string $key, string $label, string $value, string $default, string $description = '' ): void {

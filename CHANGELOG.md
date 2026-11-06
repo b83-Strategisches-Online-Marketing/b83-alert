@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.4.0 – 2026-11-06
+
+### Neu
+- Dashboard: Die Kundeninformation aus b83 White Label steht links neben der Mitteilung (große Bildschirme 1 : 3, Laptops 1 : 2, schmal untereinander). Fehlt das Widget oder ist es ausgeblendet, nimmt die Mitteilung die ganze Breite ein.
+- Einstellung „Neben der Mitteilung“: beliebiges Dashboard-Widget der Website oder keines
+- Filter `b83_alert_dashboard_side`
+
+### Geändert
+- Pop-up und Laufschrift stehen im Dashboard nur dann nebeneinander, wenn die Mitteilung breit genug ist
+
 ## 1.3.0 – 2026-11-06
 
 ### Neu
