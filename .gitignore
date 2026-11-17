@@ -1,13 +1,22 @@
-# Betriebssystem / Editor
-.DS_Store
-Thumbs.db
-.idea/
-.vscode/
-*.swp
+# Persönliche Claude-Code-Dateien
+CLAUDE.local.md
+.claude/settings.local.json
 
-# Abhängigkeiten / Builds
-/vendor/
+# Abhängigkeiten und Builds
 /node_modules/
+/vendor/
+/build/
 /dist/
 *.zip
 
+# Secrets
+.env
+.env.*
+
+# System und Editor
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp
