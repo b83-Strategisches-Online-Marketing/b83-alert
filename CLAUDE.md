@@ -11,7 +11,7 @@
 - **Präfix für Funktionen, Optionen, Hooks, Capabilities, Nonces:** `b83_alert_`, Konstanten `B83_ALERT_`
 - **Repository:** github.com/b83-Strategisches-Online-Marketing/b83-alert (öffentlich)
 - **Vertrieb:** intern, nur für b83-Kundenseiten, vorerst kein Verkauf geplant
-- **Im Einsatz auf:** offen (bei Bedarf ergänzen)
+- **Im Einsatz auf:** mehrere Kundenseiten
 - **Zweck in einem Satz:** Wichtige Mitteilungen schnell als Pop-up und/oder Laufschrift (Ticker) veröffentlichen, zeitgesteuert und nur sichtbar, wenn befüllt und aktiv.
 
 ## b83-Standards (gelten für alle b83-Plugins)
